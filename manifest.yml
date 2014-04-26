@@ -4,6 +4,6 @@ applications:
   memory: 8M
   instances: 1
   buildpack: https://github.com/michaljemala/cloudfoundry-buildpack-go.git
-  host: hello-go
+  host: hello-go-${random-word}
   domain: cfapps.io
   path: .
