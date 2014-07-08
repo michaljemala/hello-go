@@ -6,6 +6,7 @@ import (
 	"launchpad.net/goyaml"
 	"net/http"
 	"os"
+	"runtime"
 )
 
 const (
@@ -34,19 +35,20 @@ func main() {
 }
 
 func hello(res http.ResponseWriter, req *http.Request) {
+	// Dump Go version
+	fmt.Fprintf(res, "%v\n\n", runtime.Version())
+
 	// Dump ENV
-	fmt.Fprint(res, "ENV:\n")
 	env := os.Environ()
 	for _, e := range env {
 		fmt.Fprintln(res, e)
 	}
-	fmt.Fprint(res, "\nYAML:\n")
 
 	//Dump some YAML
 	t := T{A: "Foo", B: []int{1, 2, 3}}
 	if d, err := goyaml.Marshal(&t); err != nil {
 		fmt.Fprintf(res, "Unable to dump YAML")
 	} else {
-		fmt.Fprintf(res, "--- t dump:\n%s\n\n", string(d))
+		fmt.Fprintf(res, "\n\n--- \n%s", d)
 	}
 }
