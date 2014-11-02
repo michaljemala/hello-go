@@ -1,1 +1,0 @@
-web: hello-go
